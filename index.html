@@ -128,7 +128,6 @@
             z-index: 105;
         }
 
-        /* 導覽列微縮 */
         .stats-wrapper {
             max-width: 600px;
             margin: 0 auto;
@@ -191,7 +190,6 @@
             font-weight: 800;
         }
 
-        /* 滾動區域 */
         .scrollable-content {
             flex: 1;
             overflow-y: auto;
@@ -202,7 +200,6 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* 活動流程頁面設定 */
         #pageSchedule {
             background-color: var(--primary-bg);
             padding: 2px 0;
@@ -236,14 +233,13 @@
         }
 
         .timeline-item {
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .timeline-item:last-child {
             margin-bottom: 0;
         }
 
-        /* 時間軸與活動名稱平行政齊 */
         .timeline-main {
             display: flex;
             gap: 12px;
@@ -273,7 +269,7 @@
             line-height: 1.35;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             flex-wrap: wrap;
         }
 
@@ -285,13 +281,12 @@
             filter: drop-shadow(0 1px 2px rgba(0,0,0,0.12));
         }
 
-        /* 其他資訊 (地點) 縮進 */
         .location-group {
             margin-left: 104px;
-            margin-top: 5px;
+            margin-top: 6px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
             align-items: flex-start;
         }
 
@@ -312,7 +307,6 @@
             font-size: 0.82rem;
         }
 
-        /* 高亮編號標籤 */
         .number-tag-highlight {
             display: inline-block;
             font-size: 0.73rem;
@@ -333,6 +327,39 @@
             padding: 2px 8px;
             border-radius: 6px;
             display: inline-block;
+        }
+
+        .event-detail-box {
+            font-size: 0.76rem;
+            color: #475569;
+            background: #f8fafc;
+            border-left: 3px solid #0284c7;
+            padding: 6px 10px;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.4;
+            width: 100%;
+        }
+
+        /* 標題旁邊的資訊 i 圖示按鈕 (Information) */
+        .info-btn-inline {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #0284c7;
+            background-color: #e0f2fe;
+            border: 1px solid #bae6fd;
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            line-height: 1;
+            margin-left: 2px;
+        }
+
+        .info-btn-inline:active {
+            transform: scale(0.9);
+            background-color: #bae6fd;
         }
 
         .zone-sub-scroll-wrapper {
@@ -374,19 +401,9 @@
             box-shadow: 0 2px 8px rgba(11, 30, 54, 0.35);
         }
 
-        .zone-sub-card .icon {
-            font-size: 0.95em;
-        }
-
-        .zone-sub-card .name {
-            font-size: 0.78em;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .zone-sub-card.active .name {
-            color: white;
-        }
+        .zone-sub-card .icon { font-size: 0.95em; }
+        .zone-sub-card .name { font-size: 0.78em; font-weight: 700; white-space: nowrap; }
+        .zone-sub-card.active .name { color: white; }
 
         .search-box input {
             width: 100%;
@@ -400,16 +417,10 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.02);
         }
 
-        .search-box input:focus {
-            border-color: var(--accent-blue);
-        }
+        .search-box input:focus { border-color: var(--accent-blue); }
 
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
         .map-card {
             background: white;
@@ -472,35 +483,16 @@
             border: 1px solid var(--border-color);
         }
 
-        .item-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .item-left { display: flex; align-items: center; gap: 12px; }
+        .item-name { font-size: 0.98em; font-weight: 700; color: var(--text-main); }
 
-        .item-name {
-            font-size: 0.98em;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .tag {
-            font-size: 0.7em;
-            padding: 2px 6px;
-            border-radius: 6px;
-            font-weight: 700;
-        }
-
+        .tag { font-size: 0.7em; padding: 2px 6px; border-radius: 6px; font-weight: 700; }
         .tag.rain { background: #fef3c7; color: #b45309; }
         .tag.grass { background: #dcfce7; color: #15803d; }
         .tag.car { background: #e0f2fe; color: #0284c7; }
         .tag.hotel { background: #f3e8ff; color: #7e22ce; }
 
-        .item-sub {
-            font-size: 0.78em;
-            color: var(--subtext-color);
-            margin-top: 2px;
-        }
+        .item-sub { font-size: 0.78em; color: var(--subtext-color); margin-top: 2px; }
 
         .night-badge {
             background-color: var(--night-bg);
@@ -528,22 +520,9 @@
             transition: opacity 0.2s;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-img-wrapper {
-            max-width: 95vw;
-            max-height: 90vh;
-            overflow: auto;
-        }
-
-        .modal-img-wrapper img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-img-wrapper { max-width: 95vw; max-height: 90vh; overflow: auto; }
+        .modal-img-wrapper img { width: 100%; height: auto; border-radius: 8px; }
 
         .close-modal-btn {
             position: absolute;
@@ -581,7 +560,6 @@
         </div>
     </header>
 
-    <!-- 頂部 4 個獨立導覽卡片 -->
     <div class="stats-wrapper">
         <div class="stats-grid">
             <div id="cardSchedule" class="stat-card active-card" onclick="switchPage('schedule')">
@@ -658,10 +636,19 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">14:30 - 16:00</span>
-                    <div class="timeline-title">情滿中秋闖天關</div>
+                    <div class="timeline-title">
+                        情滿中秋闖天關
+                        <button class="info-btn-inline" onclick="openImageModal('中秋闖天關.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
+                    <div class="event-detail-box">
+                        🎯 <b>過五關挑戰：</b><br>
+                        1. 雙龍吐珠 2. 手腳並用 3. 投壺 4. 投沙包 5. 剪刀石頭布
+                    </div>
                 </div>
             </div>
 
@@ -670,10 +657,13 @@
                     <span class="timeline-time">16:00 - 17:00</span>
                     <div class="timeline-title">
                         小鐘泡泡奇蹟達人秀 <span class="emoji-icon">🫧</span>
+                        <button class="info-btn-inline" onclick="openImageModal('小鐘泡泡奇蹟.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 帝王帳活動場 <span class="number-tag-highlight">64前方</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 帝王帳廣場 <span class="number-tag-highlight">64 前方</span></span>
                 </div>
             </div>
 
@@ -682,10 +672,16 @@
                     <span class="timeline-time">17:00 - 17:20</span>
                     <div class="timeline-title">
                         全體團體大合照 <span class="emoji-icon">📸</span>
+                        <button class="info-btn-inline" onclick="openImageModal('團體照.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營車廣場 <span class="number-tag-highlight">36</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營車廣場 <span class="number-tag-highlight">36 前方</span></span>
+                    <div class="event-detail-box">
+                        🎁 參加的朋友們現場可領取小禮物（數量有限）
+                    </div>
                 </div>
             </div>
 
@@ -701,7 +697,12 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">19:00 - 19:30</span>
-                    <div class="timeline-title">溜溜球創意表演</div>
+                    <div class="timeline-title">
+                        溜溜球創意表演 (場次一)
+                        <button class="info-btn-inline" onclick="openImageModal('溜溜球創意演出.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
@@ -711,7 +712,12 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">19:30 - 20:00</span>
-                    <div class="timeline-title">歡樂雜耍秀</div>
+                    <div class="timeline-title">
+                        歡樂雜耍秀 (場次一)
+                        <button class="info-btn-inline" onclick="openImageModal('歡樂雜耍秀.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
@@ -721,7 +727,12 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">20:00 - 20:30</span>
-                    <div class="timeline-title">溜溜球創意表演</div>
+                    <div class="timeline-title">
+                        溜溜球創意表演 (場次二)
+                        <button class="info-btn-inline" onclick="openImageModal('溜溜球創意演出.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
@@ -731,7 +742,12 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">20:30 - 21:00</span>
-                    <div class="timeline-title">歡樂雜耍秀</div>
+                    <div class="timeline-title">
+                        歡樂雜耍秀 (場次二)
+                        <button class="info-btn-inline" onclick="openImageModal('歡樂雜耍秀.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
@@ -743,10 +759,17 @@
                     <span class="timeline-time">21:00 - 22:00</span>
                     <div class="timeline-title">
                         中秋驚喜開箱趴 - 交換禮物 <span class="emoji-icon">🎁</span>
+                        <button class="info-btn-inline" onclick="openImageModal('交換禮物.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
+                    <div class="event-detail-box">
+                        🎁 <b>規則：</b>準備全新、包裝完整 $200 元內小確幸禮物。最晚 19:00 前交至活動區領取號碼牌。<br>
+                        ❤️ <b>加碼：</b>趣味驚嚇獎 * 10 份！
+                    </div>
                 </div>
             </div>
 
@@ -755,6 +778,9 @@
                     <span class="timeline-time">22:00 - 22:30</span>
                     <div class="timeline-title">
                         九月慶生趴 / 頒獎典禮 <span class="emoji-icon">🎂</span>
+                        <button class="info-btn-inline" onclick="openImageModal('慶生會.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="location-group">
@@ -895,7 +921,7 @@
 <div class="modal-overlay" id="imageModal" onclick="closeImageModal()">
     <button class="close-modal-btn" onclick="closeImageModal()">&times;</button>
     <div class="modal-img-wrapper">
-        <img id="modalImg" src="" alt="放大地圖">
+        <img id="modalImg" src="" alt="放大地圖/海報">
     </div>
 </div>
 
