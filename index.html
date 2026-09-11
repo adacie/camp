@@ -60,10 +60,9 @@
         header {
             background: linear-gradient(135deg, #0b1e36 0%, #112544 100%);
             color: white;
-            padding: 20px 16px 28px 16px;
+            padding: 16px 16px 18px 16px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             position: relative;
-            overflow: visible !important;
         }
 
         .header-content {
@@ -78,12 +77,12 @@
         .header-text {
             text-align: left;
             flex: 1;
-            padding-right: 130px;
+            padding-right: 120px;
         }
 
         header h1 {
-            margin: 0 0 4px 0;
-            font-size: 1.5em;
+            margin: 0 0 2px 0;
+            font-size: 1.35em;
             font-weight: 900;
             letter-spacing: 0.8px;
             line-height: 1.2;
@@ -92,7 +91,7 @@
         }
 
         .sub-title {
-            font-size: 1.05em;
+            font-size: 0.95em;
             font-weight: 800;
             line-height: 1.3;
             color: #38bdf8;
@@ -103,15 +102,15 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            font-size: 0.78em;
+            font-size: 0.75em;
             color: rgba(255, 255, 255, 0.65);
-            margin-top: 6px;
+            margin-top: 4px;
             font-weight: 400;
         }
 
         .calendar-icon-file {
-            width: 15px;
-            height: 15px;
+            width: 14px;
+            height: 14px;
             display: inline-block;
             vertical-align: middle;
             flex-shrink: 0;
@@ -120,8 +119,8 @@
         .logo-right {
             position: absolute;
             right: -6px;
-            top: -12px;
-            width: 145px;
+            top: -10px;
+            width: 125px;
             height: auto;
             object-fit: contain;
             filter: drop-shadow(0px 6px 12px rgba(0,0,0,0.35));
@@ -129,10 +128,12 @@
             z-index: 105;
         }
 
+        /* 導覽列微縮，降低整體卡片高度 */
         .stats-wrapper {
             max-width: 600px;
-            margin: 8px auto 0 auto;
-            padding: 0 12px;
+            margin: 0 auto;
+            padding: 8px 12px;
+            background-color: var(--primary-bg);
             position: relative;
             z-index: 101;
         }
@@ -142,9 +143,9 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 6px;
             background: var(--card-bg);
-            padding: 10px 6px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 6px 4px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             border: 1px solid var(--border-color);
         }
 
@@ -155,8 +156,8 @@
             justify-content: center;
             text-align: center;
             cursor: pointer;
-            padding: 6px 2px;
-            border-radius: 12px;
+            padding: 4px 2px;
+            border-radius: 10px;
             transition: all 0.2s ease;
             background: #f8fafc;
             border: 1.5px solid transparent;
@@ -172,28 +173,29 @@
         }
 
         .stat-icon {
-            width: 42px;
-            height: 42px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 4px;
-            font-size: 1.4em;
+            margin-bottom: 2px;
+            font-size: 1.15em;
             background-color: #ffffff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
         }
 
         .stat-card .label {
-            font-size: 0.78em;
+            font-size: 0.72em;
             color: var(--text-main);
             font-weight: 800;
         }
 
+        /* 滾動區域 Padding 微調，解決內容被遮蔽問題 */
         .scrollable-content {
             flex: 1;
             overflow-y: auto;
-            padding: 14px 12px calc(20px + var(--safe-area-bottom)) 12px;
+            padding: 8px 12px calc(20px + var(--safe-area-bottom)) 12px;
             max-width: 600px;
             width: 100%;
             margin: 0 auto;
@@ -203,7 +205,7 @@
         /* 活動流程頁面設定 */
         #pageSchedule {
             background-color: var(--primary-bg);
-            padding: 4px 0;
+            padding: 2px 0;
             border-radius: 16px;
         }
 
@@ -311,7 +313,7 @@
             font-size: 0.82rem;
         }
 
-        /* 美化編號標籤 (無圓圈，高亮配色) */
+        /* 美化編號標籤 */
         .number-tag-highlight {
             display: inline-block;
             font-size: 0.73rem;
@@ -580,7 +582,7 @@
         </div>
     </header>
 
-    <!-- 頂部 4 個獨立導覽卡片 -->
+    <!-- 頂部 4 個獨立導覽卡片 (微縮高) -->
     <div class="stats-wrapper">
         <div class="stats-grid">
             <div id="cardSchedule" class="stat-card active-card" onclick="switchPage('schedule')">
@@ -795,7 +797,7 @@
                 <div class="timeline-main">
                     <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">09:00 - 17:00</span>
                     <div class="timeline-title">
-                        撤帳/退房後，園區暢遊至17:00 <span class="emoji-icon">🎡</span>
+                        撤帳退房後，可繼續於園區暢遊至 17:00 <span class="emoji-icon">🎡</span>
                     </div>
                 </div>
             </div>
