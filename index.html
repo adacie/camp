@@ -233,7 +233,6 @@
             border-bottom: 2px dashed #e2e8f0;
         }
 
-        /* 行程項目容器 */
         .timeline-item {
             margin-bottom: 14px;
         }
@@ -242,6 +241,7 @@
             margin-bottom: 0;
         }
 
+        /* 時間軸與活動名稱平行政齊 */
         .timeline-main {
             display: flex;
             gap: 12px;
@@ -253,11 +253,11 @@
             color: #0288d1;
             border: 1px solid #bae6fd;
             font-weight: 800;
-            padding: 6px 10px;
+            padding: 5px 0;
             border-radius: 8px;
             white-space: nowrap;
-            font-size: 0.85rem;
-            min-width: 98px;
+            font-size: 0.8rem;
+            width: 92px;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
             flex-shrink: 0;
@@ -265,15 +265,29 @@
 
         .timeline-title {
             flex: 1;
-            font-weight: 700;
+            font-weight: 800;
             color: #1e293b;
-            font-size: 0.88rem;
-            line-height: 1.3;
+            font-size: 0.9rem;
+            line-height: 1.35;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
         }
 
+        /* 無膠囊背景，顯眼放大的 Emoji 圖示 */
+        .emoji-icon {
+            font-size: 1.15rem;
+            line-height: 1;
+            margin-left: 2px;
+            vertical-align: middle;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.12));
+        }
+
+        /* 其他資訊 (地點、時間補充說明) 統一於下方縮進 */
         .location-group {
-            padding-left: 110px;
-            margin-top: 4px;
+            margin-left: 104px;
+            margin-top: 5px;
             display: flex;
             flex-direction: column;
             gap: 4px;
@@ -297,24 +311,27 @@
             font-size: 0.82rem;
         }
 
-        /* 灰色系數字圓圈編號 */
-        .number-circle-grey {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 20px;
-            height: 20px;
-            padding: 0 3px;
-            border-radius: 10px;
-            font-size: 0.75rem;
+        /* 美化編號標籤 (無圓圈，高亮配色) */
+        .number-tag-highlight {
+            display: inline-block;
+            font-size: 0.73rem;
             font-weight: 800;
-            margin-left: 3px;
-            line-height: 1;
-            vertical-align: middle;
-            background-color: #e2e8f0;
-            color: #475569;
-            border: 1px solid #cbd5e1;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            color: #d97706;
+            background-color: #fef3c7;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-left: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .info-sub-note {
+            font-size: 0.76rem;
+            color: #0288d1;
+            font-weight: 700;
+            background-color: #e0f2fe;
+            padding: 2px 8px;
+            border-radius: 6px;
+            display: inline-block;
         }
 
         .zone-sub-scroll-wrapper {
@@ -602,8 +619,8 @@
                     <div class="timeline-title">夜衝進場報到</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 住宿：生活大師 <span class="number-circle-grey">61</span></span>
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營：四面亭 B區 <span class="number-circle-grey">65</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 住宿：生活大師 <span class="number-tag-highlight">61</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營：四面亭 B區 <span class="number-tag-highlight">65</span></span>
                 </div>
             </div>
         </div>
@@ -618,13 +635,12 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">全天開放</span>
-                    <div class="timeline-title">
-                        入園報到 / 住宿登記 <span style="font-size:0.82rem; color:#0288d1; font-weight:800; margin-left:4px;">(09:00 可入園 / 15:00 可進房)</span>
-                    </div>
+                    <div class="timeline-title">入園報到 / 住宿登記</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 住宿：生活大師櫃台 <span class="number-circle-grey">61</span></span>
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營：四面亭露營 B區 <span class="number-circle-grey">65</span></span>
+                    <span class="info-sub-note">(09:00 可入園 / 15:00 可進房)</span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 住宿：生活大師櫃台 <span class="number-tag-highlight">61</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營：四面亭露營 B區 <span class="number-tag-highlight">65</span></span>
                 </div>
             </div>
 
@@ -634,7 +650,7 @@
                     <div class="timeline-title">領取菱米露贈品</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
 
@@ -644,14 +660,16 @@
                     <div class="timeline-title">情滿中秋闖天關</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">16:00 - 17:00</span>
-                    <div class="timeline-title">小鐘泡泡奇蹟達人秀 🫧</div>
+                    <div class="timeline-title">
+                        小鐘泡泡奇蹟達人秀 <span class="emoji-icon">🫧</span>
+                    </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 海景車露區 A號前方帝王帳廣場</span>
@@ -661,7 +679,9 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">17:00 - 17:20</span>
-                    <div class="timeline-title">全體團體大合照 📸</div>
+                    <div class="timeline-title">
+                        全體團體大合照 <span class="emoji-icon">📸</span>
+                    </div>
                 </div>
                 <div class="location-group">
                     <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 36號前方露營車廣場</span>
@@ -671,7 +691,9 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">17:30 - 19:00</span>
-                    <div class="timeline-title">自行用晚餐時間 🍴</div>
+                    <div class="timeline-title">
+                        自行用晚餐時間 <span class="emoji-icon">🍴</span>
+                    </div>
                 </div>
             </div>
 
@@ -681,7 +703,7 @@
                     <div class="timeline-title">溜溜球創意表演</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
 
@@ -691,7 +713,7 @@
                     <div class="timeline-title">歡樂雜耍秀</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
 
@@ -701,7 +723,7 @@
                     <div class="timeline-title">溜溜球創意表演</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
 
@@ -711,27 +733,31 @@
                     <div class="timeline-title">歡樂雜耍秀</div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">21:00 - 22:00</span>
-                    <div class="timeline-title">中秋驚喜開箱趴 - 交換禮物 🎁</div>
+                    <div class="timeline-title">
+                        中秋驚喜開箱趴 - 交換禮物 <span class="emoji-icon">🎁</span>
+                    </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">22:00 - 22:30</span>
-                    <div class="timeline-title">九月慶生趴 / 頒獎典禮 🎂</div>
+                    <div class="timeline-title">
+                        九月慶生趴 / 頒獎典禮 <span class="emoji-icon">🎂</span>
+                    </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
                 </div>
             </div>
         </div>
@@ -746,26 +772,31 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">07:30 - 09:30</span>
-                    <div class="timeline-title">住宿早餐時間 🍳</div>
+                    <div class="timeline-title">
+                        住宿早餐時間 <span class="emoji-icon">🍳</span>
+                    </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 美食餐廳 <span class="number-circle-grey">24</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 美食餐廳 <span class="number-tag-highlight">24</span></span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">11:00 - 12:00</span>
-                    <div class="timeline-title">
-                        撤帳退房 <span style="font-size:0.82rem; color:#16a34a; font-weight:800; margin-left:4px;">(搭帳 12:00 前 / 住宿 11:00 前)</span>
-                    </div>
+                    <div class="timeline-title">撤帳退房</div>
+                </div>
+                <div class="location-group">
+                    <span class="info-sub-note" style="color:#16a34a; background-color:#dcfce7;">(搭帳 12:00 前 / 住宿 11:00 前)</span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">09:00 - 17:00</span>
-                    <div class="timeline-title">撤帳退房後，可繼續於園區暢遊至 17:00 🎡</div>
+                    <div class="timeline-title">
+                        撤帳退房後，可繼續於園區暢遊至 17:00 <span class="emoji-icon">🎡</span>
+                    </div>
                 </div>
             </div>
         </div>
