@@ -269,7 +269,7 @@
             line-height: 1.35;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             flex-wrap: wrap;
         }
 
@@ -302,7 +302,7 @@
             border-radius: 6px;
         }
 
-        .location-tag i {
+        .location-tag i.fa-location-dot {
             color: #64748b;
             font-size: 0.82rem;
         }
@@ -329,18 +329,7 @@
             display: inline-block;
         }
 
-        .event-detail-box {
-            font-size: 0.76rem;
-            color: #475569;
-            background: #f8fafc;
-            border-left: 3px solid #0284c7;
-            padding: 6px 10px;
-            border-radius: 0 8px 8px 0;
-            line-height: 1.4;
-            width: 100%;
-        }
-
-        /* 標題旁邊的資訊 i 圖示按鈕 (Information) */
+        /* 數字旁的資訊 i 圖示按鈕 */
         .info-btn-inline {
             display: inline-flex;
             align-items: center;
@@ -348,13 +337,14 @@
             color: #0284c7;
             background-color: #e0f2fe;
             border: 1px solid #bae6fd;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             padding: 2px 6px;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease;
             line-height: 1;
-            margin-left: 2px;
+            margin-left: 4px;
+            vertical-align: middle;
         }
 
         .info-btn-inline:active {
@@ -636,19 +626,16 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">14:30 - 16:00</span>
-                    <div class="timeline-title">
-                        情滿中秋闖天關
+                    <div class="timeline-title">情滿中秋闖天關</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 四面亭活動場 
+                        <span class="number-tag-highlight">63</span>
                         <button class="info-btn-inline" onclick="openImageModal('中秋闖天關.jpg')" title="查看詳情/海報">
                             <i class="fa-solid fa-circle-info"></i>
                         </button>
-                    </div>
-                </div>
-                <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
-                    <div class="event-detail-box">
-                        🎯 <b>過五關挑戰：</b><br>
-                        1. 雙龍吐珠 2. 手腳並用 3. 投壺 4. 投沙包 5. 剪刀石頭布
-                    </div>
+                    </span>
                 </div>
             </div>
 
@@ -657,13 +644,16 @@
                     <span class="timeline-time">16:00 - 17:00</span>
                     <div class="timeline-title">
                         小鐘泡泡奇蹟達人秀 <span class="emoji-icon">🫧</span>
-                        <button class="info-btn-inline" onclick="openImageModal('小鐘泡泡奇蹟.jpg')" title="查看詳情/海報">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 帝王帳廣場 <span class="number-tag-highlight">64 前方</span></span>
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 帝王帳廣場 
+                        <span class="number-tag-highlight">64 前方</span>
+                        <button class="info-btn-inline" onclick="openImageModal('小鐘泡泡奇蹟.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
 
@@ -672,16 +662,16 @@
                     <span class="timeline-time">17:00 - 17:20</span>
                     <div class="timeline-title">
                         全體團體大合照 <span class="emoji-icon">📸</span>
-                        <button class="info-btn-inline" onclick="openImageModal('團體照.jpg')" title="查看詳情/海報">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營車廣場 <span class="number-tag-highlight">36 前方</span></span>
-                    <div class="event-detail-box">
-                        🎁 參加的朋友們現場可領取小禮物（數量有限）
-                    </div>
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 露營車廣場 
+                        <span class="number-tag-highlight">36 前方</span>
+                        <button class="info-btn-inline" onclick="openImageModal('團體照.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
 
@@ -697,60 +687,64 @@
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">19:00 - 19:30</span>
-                    <div class="timeline-title">
-                        溜溜球創意表演 (場次一)
+                    <div class="timeline-title">溜溜球創意表演 (場次一)</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 四面亭活動場 
+                        <span class="number-tag-highlight">63</span>
                         <button class="info-btn-inline" onclick="openImageModal('溜溜球創意演出.jpg')" title="查看詳情/海報">
                             <i class="fa-solid fa-circle-info"></i>
                         </button>
-                    </div>
-                </div>
-                <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
+                    </span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">19:30 - 20:00</span>
-                    <div class="timeline-title">
-                        歡樂雜耍秀 (場次一)
+                    <div class="timeline-title">歡樂雜耍秀 (場次一)</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 四面亭活動場 
+                        <span class="number-tag-highlight">63</span>
                         <button class="info-btn-inline" onclick="openImageModal('歡樂雜耍秀.jpg')" title="查看詳情/海報">
                             <i class="fa-solid fa-circle-info"></i>
                         </button>
-                    </div>
-                </div>
-                <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
+                    </span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">20:00 - 20:30</span>
-                    <div class="timeline-title">
-                        溜溜球創意表演 (場次二)
+                    <div class="timeline-title">溜溜球創意表演 (場次二)</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 四面亭活動場 
+                        <span class="number-tag-highlight">63</span>
                         <button class="info-btn-inline" onclick="openImageModal('溜溜球創意演出.jpg')" title="查看詳情/海報">
                             <i class="fa-solid fa-circle-info"></i>
                         </button>
-                    </div>
-                </div>
-                <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
+                    </span>
                 </div>
             </div>
 
             <div class="timeline-item">
                 <div class="timeline-main">
                     <span class="timeline-time">20:30 - 21:00</span>
-                    <div class="timeline-title">
-                        歡樂雜耍秀 (場次二)
+                    <div class="timeline-title">歡樂雜耍秀 (場次二)</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 四面亭活動場 
+                        <span class="number-tag-highlight">63</span>
                         <button class="info-btn-inline" onclick="openImageModal('歡樂雜耍秀.jpg')" title="查看詳情/海報">
                             <i class="fa-solid fa-circle-info"></i>
                         </button>
-                    </div>
-                </div>
-                <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
+                    </span>
                 </div>
             </div>
 
@@ -759,17 +753,16 @@
                     <span class="timeline-time">21:00 - 22:00</span>
                     <div class="timeline-title">
                         中秋驚喜開箱趴 - 交換禮物 <span class="emoji-icon">🎁</span>
-                        <button class="info-btn-inline" onclick="openImageModal('交換禮物.jpg')" title="查看詳情/海報">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
-                    <div class="event-detail-box">
-                        🎁 <b>規則：</b>準備全新、包裝完整 $200 元內小確幸禮物。最晚 19:00 前交至活動區領取號碼牌。<br>
-                        ❤️ <b>加碼：</b>趣味驚嚇獎 * 10 份！
-                    </div>
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 四面亭活動場 
+                        <span class="number-tag-highlight">63</span>
+                        <button class="info-btn-inline" onclick="openImageModal('交換禮物.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
 
@@ -778,13 +771,16 @@
                     <span class="timeline-time">22:00 - 22:30</span>
                     <div class="timeline-title">
                         九月慶生趴 / 頒獎典禮 <span class="emoji-icon">🎂</span>
-                        <button class="info-btn-inline" onclick="openImageModal('慶生會.jpg')" title="查看詳情/海報">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </button>
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-tag-highlight">63</span></span>
+                    <span class="location-tag">
+                        <i class="fa-solid fa-location-dot"></i> 四面亭活動場 
+                        <span class="number-tag-highlight">63</span>
+                        <button class="info-btn-inline" onclick="openImageModal('慶生會.jpg')" title="查看詳情/海報">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>
