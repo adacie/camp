@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>活動流程與營位地圖 - 菱米露</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b1e36">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="活動與地圖">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-bg: #1ea1e1;
+            --accent-yellow: #fde047;
+            --accent-blue: #0284c7;
+            --header-dark: #0b1e36;
+            --primary-green: #0d9488;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --subtext-color: #64748b;
+            --border-color: #e2e8f0;
+            --night-bg: #fef3c7;
+            --night-color: #b45309;
+            --safe-area-top: env(safe-area-inset-top, 0px);
+            --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .fixed-top-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--primary-bg);
+            flex-shrink: 0;
+            padding-top: var(--safe-area-top);
+        }
+
+        header {
+            background: linear-gradient(135deg, #0b1e36 0%, #112544 100%);
+            color: white;
+            padding: 20px 16px 28px 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: visible !important;
+        }
+
+        .header-content {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .header-text {
+            text-align: left;
+            flex: 1;
+            padding-right: 130px;
+        }
+
+        header h1 {
+            margin: 0 0 4px 0;
+            font-size: 1.5em;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            line-height: 1.2;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .sub-title {
+            font-size: 1.05em;
+            font-weight: 800;
+            line-height: 1.3;
+            color: #38bdf8;
+            letter-spacing: 0.5px;
+        }
+
+        .sub-date {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78em;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 6px;
+            font-weight: 400;
+        }
+
+        .calendar-icon-file {
+            width: 15px;
+            height: 15px;
+            display: inline-block;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        .logo-right {
+            position: absolute;
+            right: -6px;
+            top: -12px;
+            width: 145px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 6px 12px rgba(0,0,0,0.35));
+            pointer-events: none;
+            z-index: 105;
+        }
+
+        .stats-wrapper {
+            max-width: 600px;
+            margin: 8px auto 0 auto;
+            padding: 0 12px;
+            position: relative;
+            z-index: 101;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            background: var(--card-bg);
+            padding: 10px 6px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            padding: 6px 2px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            background: #f8fafc;
+            border: 1.5px solid transparent;
+        }
+
+        .stat-card:active {
+            transform: scale(0.95);
+        }
+
+        .stat-card.active-card {
+            background-color: #e0f2fe;
+            border-color: var(--accent-blue);
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+            font-size: 1.4em;
+            background-color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .stat-card .label {
+            font-size: 0.78em;
+            color: var(--text-main);
+            font-weight: 800;
+        }
+
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px 12px calc(20px + var(--safe-area-bottom)) 12px;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 活動流程頁面設定 */
+        #pageSchedule {
+            background-color: var(--primary-bg);
+            padding: 4px 0;
+            border-radius: 16px;
+        }
+
+        .day-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .day-card.night-theme { border-top: 6px solid #7e22ce; }
+        .day-card.main-theme { border-top: 6px solid #0288d1; }
+        .day-card.end-theme { border-top: 6px solid #16a34a; }
+
+        .day-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.05rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px dashed #e2e8f0;
+        }
+
+        /* 行程項目容器 */
+        .timeline-item {
+            margin-bottom: 14px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 僅讓主標題列與時間框垂直置中對齊 */
+        .timeline-main {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .timeline-time {
+            background: #f0f9ff;
+            color: #0288d1;
+            border: 1px solid #bae6fd;
+            font-weight: 800;
+            padding: 6px 10px;
+            border-radius: 8px;
+            white-space: nowrap;
+            font-size: 0.85rem;
+            min-width: 98px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            flex-shrink: 0;
+        }
+
+        .timeline-title {
+            flex: 1;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 0.88rem;
+            line-height: 1.3;
+        }
+
+        /* 地點標籤區塊下移縮進 */
+        .location-group {
+            padding-left: 110px; /* 與左側時間框切齊的縮進寬度 */
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: flex-start;
+        }
+
+        .location-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 0.73rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .location-tag i {
+            color: #64748b;
+            font-size: 0.82rem;
+        }
+
+        /* 灰色系數字圓圈編號 */
+        .number-circle-grey {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 3px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-left: 3px;
+            line-height: 1;
+            vertical-align: middle;
+            background-color: #e2e8f0;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .zone-sub-scroll-wrapper {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .zone-sub-scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .zone-sub-card {
+            flex: 0 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .zone-sub-card:active {
+            transform: scale(0.95);
+        }
+
+        .zone-sub-card.active {
+            background-color: var(--header-dark);
+            border-color: #38bdf8;
+            color: white;
+            box-shadow: 0 2px 8px rgba(11, 30, 54, 0.35);
+        }
+
+        .zone-sub-card .icon {
+            font-size: 0.95em;
+        }
+
+        .zone-sub-card .name {
+            font-size: 0.78em;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .zone-sub-card.active .name {
+            color: white;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 0.88em;
+            background: white;
+            outline: none;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .map-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .map-header {
+            padding: 10px 14px;
+            font-weight: 800;
+            font-size: 0.9em;
+            color: var(--text-main);
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .map-img-container {
+            width: 100%;
+            position: relative;
+            background: #f1f5f9;
+            cursor: pointer;
+        }
+
+        .map-img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .map-overlay-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(15, 23, 42, 0.75);
+            color: white;
+            font-size: 0.72em;
+            padding: 5px 10px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            font-weight: 600;
+        }
+
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-name {
+            font-size: 0.98em;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .tag {
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .tag.rain { background: #fef3c7; color: #b45309; }
+        .tag.grass { background: #dcfce7; color: #15803d; }
+        .tag.car { background: #e0f2fe; color: #0284c7; }
+        .tag.hotel { background: #f3e8ff; color: #7e22ce; }
+
+        .item-sub {
+            font-size: 0.78em;
+            color: var(--subtext-color);
+            margin-top: 2px;
+        }
+
+        .night-badge {
+            background-color: var(--night-bg);
+            color: var(--night-color);
+            font-size: 0.72em;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid #fde047;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-img-wrapper {
+            max-width: 95vw;
+            max-height: 90vh;
+            overflow: auto;
+        }
+
+        .modal-img-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            color: white;
+            font-size: 1.8em;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="fixed-top-wrapper">
+    <header>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>新竹小叮噹中秋團圓</h1>
+                <div class="sub-title">活動流程、園區與營位地圖</div>
+                <div class="sub-date">
+                    <svg class="calendar-icon-file" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="4" width="20" height="17" rx="3" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/>
+                        <path d="M2 9H22" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/>
+                        <path d="M7 2V5" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/>
+                        <path d="M17 2V5" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/>
+                        <circle cx="6.5" cy="12.5" r="1.2" fill="#38bdf8"/>
+                        <circle cx="12" cy="12.5" r="1.2" fill="#38bdf8"/>
+                    </svg>
+                    <span>115 年 09 月 11 日 - 13 日</span>
+                </div>
+            </div>
+            <img id="logoImage" alt="菱米露露營 Logo" class="logo-right" src="https://raw.githubusercontent.com/adacie/charge.github.io/main/%E8%8F%B1%E7%B1%B3%E9%9C%B2logo_v2.png">
+        </div>
+    </header>
+
+    <!-- 頂部 4 個獨立導覽卡片 -->
+    <div class="stats-wrapper">
+        <div class="stats-grid">
+            <div id="cardSchedule" class="stat-card active-card" onclick="switchPage('schedule')">
+                <div class="stat-icon">📅</div>
+                <span class="label">活動流程</span>
+            </div>
+            <div id="cardParkMap" class="stat-card" onclick="switchPage('parkMap')">
+                <div class="stat-icon">🗺️</div>
+                <span class="label">園區地圖</span>
+            </div>
+            <div id="cardCampsiteMap" class="stat-card" onclick="switchPage('campsiteMap')">
+                <div class="stat-icon">⛺</div>
+                <span class="label">營區地圖</span>
+            </div>
+            <div id="cardSpots" class="stat-card" onclick="switchPage('spots')">
+                <div class="stat-icon">📋</div>
+                <span class="label">營位資訊</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scrollable-content">
+
+    <!-- 1. 活動流程頁面 -->
+    <div id="pageSchedule" class="tab-content active">
+        <!-- Day 1: 9/11 (五) -->
+        <div class="day-card night-theme">
+            <div class="day-header" style="color: #7e22ce;">
+                <span><i class="fa-solid fa-moon"></i> 9/11 (五) 夜衝進場</span>
+                <span style="font-size:0.75rem; background:#f3e8ff; padding:2px 8px; border-radius:10px; color:#6b21a8;">夜衝首日</span>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time" style="background:#f3e8ff; color:#7e22ce; border-color:#d8b4fe;">17:00 - 23:00</span>
+                    <div class="timeline-title">夜衝進場報到</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 住宿：生活大師 <span class="number-circle-grey">61</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營：四面亭 B區 <span class="number-circle-grey">65</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 2: 9/12 (六) -->
+        <div class="day-card main-theme">
+            <div class="day-header" style="color: #0288d1;">
+                <span><i class="fa-solid fa-sun"></i> 9/12 (六) 主活動日</span>
+                <span style="font-size:0.75rem; background:#e0f2fe; padding:2px 8px; border-radius:10px; color:#0369a1;">核心行程</span>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">全天開放</span>
+                    <div class="timeline-title">
+                        入園報到 / 住宿登記 <span style="font-size:0.82rem; color:#0288d1; font-weight:800; margin-left:4px;">(09:00 可入園 / 15:00 可進房)</span>
+                    </div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 住宿：生活大師櫃台 <span class="number-circle-grey">61</span></span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營：四面亭露營 B區 <span class="number-circle-grey">65</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">10:00 - 15:00</span>
+                    <div class="timeline-title">領取菱米露贈品</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">14:30 - 16:00</span>
+                    <div class="timeline-title">情滿中秋闖天關</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">16:00 - 17:00</span>
+                    <div class="timeline-title">小鐘泡泡奇蹟達人秀 🫧</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 海景車露區 A號前方帝王帳廣場</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">17:00 - 17:20</span>
+                    <div class="timeline-title">全體團體大合照 📸</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 36號前方露營車廣場</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">17:30 - 19:00</span>
+                    <div class="timeline-title">自行用晚餐時間 🍴</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">19:00 - 19:30</span>
+                    <div class="timeline-title">溜溜球創意表演</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">19:30 - 20:00</span>
+                    <div class="timeline-title">歡樂雜耍秀</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">20:00 - 20:30</span>
+                    <div class="timeline-title">溜溜球創意表演</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">20:30 - 21:00</span>
+                    <div class="timeline-title">歡樂雜耍秀</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">21:00 - 22:00</span>
+                    <div class="timeline-title">中秋驚喜開箱趴 - 交換禮物 🎁</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time">22:00 - 22:30</span>
+                    <div class="timeline-title">九月慶生趴 / 頒獎典禮 🎂</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 四面亭活動場 <span class="number-circle-grey">63</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Day 3: 9/13 (日) -->
+        <div class="day-card end-theme">
+            <div class="day-header" style="color: #16a34a;">
+                <span><i class="fa-solid fa-flag-checkered"></i> 9/13 (日) 撤帳與遊園</span>
+                <span style="font-size:0.75rem; background:#dcfce7; padding:2px 8px; border-radius:10px; color:#15803d;">賦歸</span>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">07:30 - 09:30</span>
+                    <div class="timeline-title">住宿早餐時間 🍳</div>
+                </div>
+                <div class="location-group">
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 美食餐廳 <span class="number-circle-grey">24</span></span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">11:00 - 12:00</span>
+                    <div class="timeline-title">
+                        撤帳退房 <span style="font-size:0.82rem; color:#16a34a; font-weight:800; margin-left:4px;">(搭帳 12:00 前 / 住宿 11:00 前)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-main">
+                    <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">09:00 - 17:00</span>
+                    <div class="timeline-title">撤帳退房後，可繼續於園區暢遊至 17:00 🎡</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. 園區地圖頁面 -->
+    <div id="pageParkMap" class="tab-content">
+        <div class="map-card">
+            <div class="map-header">🗺️ 小叮噹科學主題樂園 全區導覽圖</div>
+            <div class="map-img-container" onclick="openImageModal('小叮噹地圖.jpg')">
+                <img src="小叮噹地圖.jpg" alt="全區圖">
+                <div class="map-overlay-btn">🔍 點擊看大圖</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 營區地圖頁面 -->
+    <div id="pageCampsiteMap" class="tab-content">
+        <div class="map-card">
+            <div class="map-header">⛺ 草皮 A 區營位配置圖</div>
+            <div class="map-img-container" onclick="openImageModal('IMG_4655.jpg')">
+                <img src="IMG_4655.jpg" alt="A區圖">
+                <div class="map-overlay-btn">🔍 點擊看大圖</div>
+            </div>
+        </div>
+        <div class="map-card">
+            <div class="map-header">🌿 草皮 B 區營位配置圖</div>
+            <div class="map-img-container" onclick="openImageModal('IMG_4656.jpg')">
+                <img src="IMG_4656.jpg" alt="B區圖">
+                <div class="map-overlay-btn">🔍 點擊看大圖</div>
+            </div>
+        </div>
+        <div class="map-card">
+            <div class="map-header">🏨 四面亭活動區配置圖</div>
+            <div class="map-img-container" onclick="openImageModal('IMG_4654.JPG')">
+                <img src="IMG_4654.JPG" alt="四面亭活動區圖">
+                <div class="map-overlay-btn">🔍 點擊看大圖</div>
+            </div>
+        </div>
+        <div class="map-card">
+            <div class="map-header">☂️ 烤肉雨棚區營位配置圖</div>
+            <div class="map-img-container" onclick="openImageModal('IMG_4658.jpg')">
+                <img src="IMG_4658.jpg" alt="雨棚圖">
+                <div class="map-overlay-btn">🔍 點擊看大圖</div>
+            </div>
+        </div>
+        <div class="map-card">
+            <div class="map-header">🚗 海景車露區營位配置圖</div>
+            <div class="map-img-container" onclick="openImageModal('IMG_4657.jpg')">
+                <img src="IMG_4657.jpg" alt="車露圖">
+                <div class="map-overlay-btn">🔍 點擊看大圖</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. 營位資訊頁面 -->
+    <div id="pageSpots" class="tab-content">
+        <div class="zone-sub-scroll-wrapper">
+            <div class="zone-sub-card active" onclick="filterBySubZone('ALL', this)">
+                <span class="icon">🌐</span>
+                <span class="name">全部</span>
+            </div>
+            <div class="zone-sub-card" onclick="filterBySubZone('草皮A區', this)">
+                <span class="icon">⛺</span>
+                <span class="name">草皮A</span>
+            </div>
+            <div class="zone-sub-card" onclick="filterBySubZone('草皮B區', this)">
+                <span class="icon">🌿</span>
+                <span class="name">草皮B</span>
+            </div>
+            <div class="zone-sub-card" onclick="filterBySubZone('四面亭活動區', this)">
+                <span class="icon">🏨</span>
+                <span class="name">活動區</span>
+            </div>
+            <div class="zone-sub-card" onclick="filterBySubZone('烤肉雨棚區', this)">
+                <span class="icon">☂️</span>
+                <span class="name">雨棚區</span>
+            </div>
+            <div class="zone-sub-card" onclick="filterBySubZone('海景車露區', this)">
+                <span class="icon">🚗</span>
+                <span class="name">車露區</span>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 搜尋姓名、編號或區域..." onkeyup="onSearchInput()" autocomplete="off">
+        </div>
+
+        <div id="spotListContainer" class="list-container"></div>
+    </div>
+
+</div>
+
+<!-- Modal 圖片檢視器 -->
+<div class="modal-overlay" id="imageModal" onclick="closeImageModal()">
+    <button class="close-modal-btn" onclick="closeImageModal()">&times;</button>
+    <div class="modal-img-wrapper">
+        <img id="modalImg" src="" alt="放大地圖">
+    </div>
+</div>
+
+<script>
+    const spotData = [
+        // 1. 草皮A區
+        { name: "33", zone: "草皮A區", spot: "1號", isNight: true, type: "grass" },
+        { name: "33", zone: "草皮A區", spot: "2號", isNight: true, type: "grass" },
+        { name: "翔翔", zone: "草皮A區", spot: "3號", isNight: false, type: "grass" },
+        { name: "Tsai", zone: "草皮A區", spot: "4號", isNight: false, type: "grass" },
+        { name: "Tsai", zone: "草皮A區", spot: "5號", isNight: false, type: "grass" },
+        { name: "黃雅妮", zone: "草皮A區", spot: "6號", isNight: false, type: "grass" },
+        { name: "WenjenLi", zone: "草皮A區", spot: "7號", isNight: false, type: "grass" },
+        { name: "WenjenLi", zone: "草皮A區", spot: "8號", isNight: false, type: "grass" },
+        { name: "WenjenLi", zone: "草皮A區", spot: "9號", isNight: false, type: "grass" },
+        { name: "WenjenLi", zone: "草皮A區", spot: "10號", isNight: false, type: "grass" },
+        { name: "WenjenLi", zone: "草皮A區", spot: "11號", isNight: false, type: "grass" },
+        { name: "WenjenLi", zone: "草皮A區", spot: "12號", isNight: false, type: "grass" },
+        { name: "漢雯", zone: "草皮A區", spot: "13號", isNight: false, type: "grass" },
+        { name: "漢雯", zone: "草皮A區", spot: "14號", isNight: true, type: "grass" },
+        { name: "漢雯", zone: "草皮A區", spot: "15號", isNight: true, type: "grass" },
+        { name: "沛君", zone: "草皮A區", spot: "16號", isNight: true, type: "grass" },
+        { name: "億慧", zone: "草皮A區", spot: "17號", isNight: false, type: "grass" },
+        { name: "億慧", zone: "草皮A區", spot: "18號", isNight: false, type: "grass" },
+        { name: "億慧", zone: "草皮A區", spot: "19號", isNight: false, type: "grass" },
+        { name: "億慧", zone: "草皮A區", spot: "20號", isNight: false, type: "grass" },
+
+        // 2. 草皮B區
+        { name: "Qmo", zone: "草皮B區", spot: "1號", isNight: false, type: "grass" },
+        { name: "Qmo", zone: "草皮B區", spot: "2號", isNight: false, type: "grass" },
+        { name: "木魚", zone: "草皮B區", spot: "3號", isNight: false, type: "grass" },
+        { name: "Jo", zone: "草皮B區", spot: "4號", isNight: false, type: "grass" },
+        { name: "小平", zone: "草皮B區", spot: "5號", isNight: false, type: "grass" },
+        { name: "芳仙", zone: "草皮B區", spot: "6號", isNight: false, type: "grass" },
+        { name: "果果", zone: "草皮B區", spot: "7號", isNight: false, type: "grass" },
+        { name: "雅婷", zone: "草皮B區", spot: "8號", isNight: false, type: "grass" },
+        { name: "Mona", zone: "草皮B區", spot: "9號", isNight: false, type: "grass" },
+        { name: "Selina Wang", zone: "草皮B區", spot: "10號", isNight: false, type: "grass" },
+        { name: "Selina Wang", zone: "草皮B區", spot: "11號", isNight: false, type: "grass" },
+        { name: "厶x多多", zone: "草皮B區", spot: "12號", isNight: false, type: "grass" },
+        { name: "厶x多多", zone: "草皮B區", spot: "13號", isNight: false, type: "grass" },
+        { name: "少偉", zone: "草皮B區", spot: "14號", isNight: true, type: "grass" },
+        { name: "小溶", zone: "草皮B區", spot: "15號", isNight: false, type: "grass" },
+        { name: "張銚", zone: "草皮B區", spot: "16號", isNight: true, type: "grass" },
+        { name: "Emma", zone: "草皮B區", spot: "17號", isNight: true, type: "grass" },
+        { name: "Emma", zone: "草皮B區", spot: "18號", isNight: true, type: "grass" },
+        { name: "Sally文嘉", zone: "草皮B區", spot: "19號", isNight: false, type: "grass" },
+        { name: "張庭瑄", zone: "草皮B區", spot: "20號", isNight: true, type: "grass" },
+        { name: "張庭瑄", zone: "草皮B區", spot: "21號", isNight: true, type: "grass" },
+        { name: "Nico", zone: "草皮B區", spot: "22號", isNight: false, type: "grass" },
+        { name: "Nico", zone: "草皮B區", spot: "23號", isNight: false, type: "grass" },
+        { name: "SiaoKing", zone: "草皮B區", spot: "24號", isNight: true, type: "grass" },
+        { name: "志麟", zone: "草皮B區", spot: "25號", isNight: false, type: "grass" },
+        { name: "心怡", zone: "草皮B區", spot: "26號", isNight: false, type: "grass" },
+        { name: "Sunny Wu", zone: "草皮B區", spot: "27號", isNight: false, type: "grass" },
+        { name: "Joe Lin_坪", zone: "草皮B區", spot: "28號", isNight: false, type: "grass" },
+        { name: "Q", zone: "草皮B區", spot: "29號", isNight: true, type: "grass" },
+
+        // 3. 四面亭活動區
+        { name: "JOJO", zone: "四面亭活動區", spot: "8601", isNight: false, type: "hotel" },
+        { name: "謝姿怡", zone: "四面亭活動區", spot: "8602", isNight: false, type: "hotel" },
+        { name: "瑞婷Riva Li", zone: "四面亭活動區", spot: "8603", isNight: false, type: "hotel" },
+        { name: "瑞婷Riva Li", zone: "四面亭活動區", spot: "8605", isNight: false, type: "hotel" },
+        { name: "瑞婷Riva Li", zone: "四面亭活動區", spot: "8606", isNight: false, type: "hotel" },
+        { name: "瑞婷Riva Li", zone: "四面亭活動區", spot: "8607", isNight: false, type: "hotel" },
+        { name: "瑞婷Riva Li", zone: "四面亭活動區", spot: "8608", isNight: false, type: "hotel" },
+        { name: "瑞婷Riva Li", zone: "四面亭活動區", spot: "8609", isNight: false, type: "hotel" },
+        { name: "Pyng T", zone: "四面亭活動區", spot: "8611", isNight: false, type: "hotel" },
+        { name: "Pyng T", zone: "四面亭活動區", spot: "8612", isNight: false, type: "hotel" },
+        { name: "Pyng T", zone: "四面亭活動區", spot: "8613", isNight: false, type: "hotel" },
+
+        // 4. 烤肉雨棚區
+        { name: "小嵐", zone: "烤肉雨棚區", spot: "1號", isNight: false, type: "rain" },
+        { name: "Vivian rose", zone: "烤肉雨棚區", spot: "4號", isNight: true, type: "rain" },
+        { name: "Vivian rose", zone: "烤肉雨棚區", spot: "5號", isNight: true, type: "rain" },
+        { name: "Eric", zone: "烤肉雨棚區", spot: "6號", isNight: false, type: "rain" },
+        { name: "Eric", zone: "烤肉雨棚區", spot: "7號", isNight: false, type: "rain" },
+        { name: "黃育萱", zone: "烤肉雨棚區", spot: "8號", isNight: false, type: "rain" },
+        { name: "黃育萱", zone: "烤肉雨棚區", spot: "9號", isNight: false, type: "rain" },
+        { name: "黃育萱", zone: "烤肉雨棚區", spot: "10號", isNight: false, type: "rain" },
+        { name: "婉婷", zone: "烤肉雨棚區", spot: "11號", isNight: false, type: "rain" },
+        { name: "小幼", zone: "烤肉雨棚區", spot: "12號", isNight: true, type: "rain" },
+        { name: "妍里Lily", zone: "烤肉雨棚區", spot: "13號", isNight: true, type: "rain" },
+        { name: "李", zone: "烤肉雨棚區", spot: "14號", isNight: false, type: "rain" },
+        { name: "Angel Chang", zone: "烤肉雨棚區", spot: "15號", isNight: true, type: "rain" },
+        { name: "淑貞", zone: "烤肉雨棚區", spot: "16號", isNight: true, type: "rain" },
+        { name: "Cindy歆喬", zone: "烤肉雨棚區", spot: "17號", isNight: false, type: "rain" },
+        { name: "琬鈞", zone: "烤肉雨棚區", spot: "18號", isNight: false, type: "rain" },
+        { name: "琬鈞", zone: "烤肉雨棚區", spot: "19號", isNight: false, type: "rain" },
+        { name: "建宏", zone: "烤肉雨棚區", spot: "20號", isNight: true, type: "rain" },
+        { name: "kuanyin", zone: "烤肉雨棚區", spot: "21號", isNight: false, type: "rain" },
+        { name: "佳豪", zone: "烤肉雨棚區", spot: "22號", isNight: false, type: "rain" },
+        { name: "琬鈞", zone: "烤肉雨棚區", spot: "23號", isNight: false, type: "rain" },
+
+        // 5. 海景車露區
+        { name: "Ami", zone: "海景車露區", spot: "右1 (1帳)", isNight: false, type: "car" },
+        { name: "Ami", zone: "海景車露區", spot: "右1 (2帳)", isNight: false, type: "car" },
+        { name: "Marco", zone: "海景車露區", spot: "左1", isNight: false, type: "car" },
+        { name: "WTC", zone: "海景車露區", spot: "左1", isNight: false, type: "car" },
+        { name: "勇哥", zone: "海景車露區", spot: "右2", isNight: false, type: "car" },
+        { name: "厶x多多", zone: "海景車露區", spot: "右2", isNight: false, type: "car" },
+        { name: "Anna", zone: "海景車露區", spot: "右2", isNight: true, type: "car" },
+        { name: "璨亭 Leah", zone: "海景車露區", spot: "左2 (1帳)", isNight: true, type: "car" },
+        { name: "璨亭 Leah", zone: "海景車露區", spot: "左2 (2帳)", isNight: true, type: "car" },
+        { name: "Patti", zone: "海景車露區", spot: "左3", isNight: false, type: "car" },
+        { name: "姿妃Faye", zone: "海景車露區", spot: "左3", isNight: false, type: "car" },
+        { name: "Vivi", zone: "海景車露區", spot: "右3", isNight: false, type: "car" },
+        { name: "Janet", zone: "海景車露區", spot: "右3 (1帳)", isNight: false, type: "car" },
+        { name: "Janet", zone: "海景車露區", spot: "右3 (2帳)", isNight: false, type: "car" },
+        { name: "小啾咪有油頭", zone: "海景車露區", spot: "左4", isNight: false, type: "car" },
+        { name: "胖文", zone: "海景車露區", spot: "左4", isNight: false, type: "car" },
+        { name: "JOJO", zone: "海景車露區", spot: "右4 (1帳)", isNight: false, type: "car" },
+        { name: "JOJO", zone: "海景車露區", spot: "右4 (2帳)", isNight: false, type: "car" },
+        { name: "Vic Chung", zone: "海景車露區", spot: "左5", isNight: true, type: "car" },
+        { name: "陳弘慈", zone: "海景車露區", spot: "右5", isNight: false, type: "car" }
+    ];
+
+    let currentZoneFilter = 'ALL';
+
+    function switchPage(page) {
+        document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('active-card'));
+        document.querySelectorAll('.tab-content').forEach(p => p.classList.remove('active'));
+
+        if (page === 'schedule') {
+            document.getElementById('cardSchedule').classList.add('active-card');
+            document.getElementById('pageSchedule').classList.add('active');
+        } else if (page === 'parkMap') {
+            document.getElementById('cardParkMap').classList.add('active-card');
+            document.getElementById('pageParkMap').classList.add('active');
+        } else if (page === 'campsiteMap') {
+            document.getElementById('cardCampsiteMap').classList.add('active-card');
+            document.getElementById('pageCampsiteMap').classList.add('active');
+        } else if (page === 'spots') {
+            document.getElementById('cardSpots').classList.add('active-card');
+            document.getElementById('pageSpots').classList.add('active');
+            renderSpotList();
+        }
+    }
+
+    function filterBySubZone(zone, el) {
+        currentZoneFilter = zone;
+        document.querySelectorAll('.zone-sub-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+        renderSpotList();
+    }
+
+    function onSearchInput() {
+        renderSpotList();
+    }
+
+    function renderSpotList() {
+        const container = document.getElementById('spotListContainer');
+        const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+        container.innerHTML = '';
+
+        const filteredData = spotData.filter(item => {
+            const matchZone = (currentZoneFilter === 'ALL') || (item.zone === currentZoneFilter);
+            const matchKeyword = item.name.toLowerCase().includes(keyword) || 
+                                 item.zone.toLowerCase().includes(keyword) || 
+                                 item.spot.toLowerCase().includes(keyword);
+            return matchZone && matchKeyword;
+        });
+
+        if (filteredData.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding: 25px; color:#ffffff; font-weight:600;">未找到相關預訂資料</div>';
+            return;
+        }
+
+        filteredData.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'item-card';
+
+            let tagClass = 'grass';
+            if (item.type === 'rain') tagClass = 'rain';
+            if (item.type === 'car') tagClass = 'car';
+            if (item.type === 'hotel') tagClass = 'hotel';
+
+            card.innerHTML = `
+                <div class="item-left">
+                    <div class="item-info">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span class="item-name">${item.name}</span>
+                            <span class="tag ${tagClass}">${item.zone}</span>
+                        </div>
+                        <div class="item-sub">編號 / 位置：${item.spot}</div>
+                    </div>
+                </div>
+                <div>
+                    ${item.isNight ? '<span class="night-badge">🌙 夜衝</span>' : '<span style="font-size:0.75em; color:#94a3b8;">一般進場</span>'}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function openImageModal(imgSrc) {
+        document.getElementById('modalImg').src = imgSrc;
+        document.getElementById('imageModal').classList.add('active');
+    }
+
+    function closeImageModal() {
+        document.getElementById('imageModal').classList.remove('active');
+    }
+
+    renderSpotList();
+</script>
+</body>
+</html>
