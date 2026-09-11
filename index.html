@@ -128,7 +128,7 @@
             z-index: 105;
         }
 
-        /* 導覽列微縮，降低整體卡片高度 */
+        /* 導覽列微縮 */
         .stats-wrapper {
             max-width: 600px;
             margin: 0 auto;
@@ -191,7 +191,7 @@
             font-weight: 800;
         }
 
-        /* 滾動區域 Padding 微調，解決內容被遮蔽問題 */
+        /* 滾動區域 */
         .scrollable-content {
             flex: 1;
             overflow-y: auto;
@@ -277,7 +277,6 @@
             flex-wrap: wrap;
         }
 
-        /* 無膠囊背景，顯眼放大的 Emoji 圖示 */
         .emoji-icon {
             font-size: 1.15rem;
             line-height: 1;
@@ -286,7 +285,7 @@
             filter: drop-shadow(0 1px 2px rgba(0,0,0,0.12));
         }
 
-        /* 其他資訊 (地點、時間補充說明) 統一於下方縮進 */
+        /* 其他資訊 (地點) 縮進 */
         .location-group {
             margin-left: 104px;
             margin-top: 5px;
@@ -313,7 +312,7 @@
             font-size: 0.82rem;
         }
 
-        /* 美化編號標籤 */
+        /* 高亮編號標籤 */
         .number-tag-highlight {
             display: inline-block;
             font-size: 0.73rem;
@@ -582,7 +581,7 @@
         </div>
     </header>
 
-    <!-- 頂部 4 個獨立導覽卡片 (微縮高) -->
+    <!-- 頂部 4 個獨立導覽卡片 -->
     <div class="stats-wrapper">
         <div class="stats-grid">
             <div id="cardSchedule" class="stat-card active-card" onclick="switchPage('schedule')">
@@ -674,7 +673,7 @@
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 海景車露區 A號前方帝王帳廣場</span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 帝王帳廣場 <span class="number-tag-highlight">海景露營區A</span></span>
                 </div>
             </div>
 
@@ -686,7 +685,7 @@
                     </div>
                 </div>
                 <div class="location-group">
-                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 36號前方露營車廣場</span>
+                    <span class="location-tag"><i class="fa-solid fa-location-dot"></i> 露營車廣場 <span class="number-tag-highlight">36</span></span>
                 </div>
             </div>
 
@@ -797,7 +796,7 @@
                 <div class="timeline-main">
                     <span class="timeline-time" style="background:#dcfce7; color:#15803d; border-color:#86efac;">09:00 - 17:00</span>
                     <div class="timeline-title">
-                        撤帳/退房後，園區暢遊至17:00 <span class="emoji-icon">🎡</span>
+                        撤帳 / 退房後，園區暢遊至 17:00 <span class="emoji-icon">🎡</span>
                     </div>
                 </div>
             </div>
